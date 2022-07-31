@@ -64,6 +64,72 @@ const Home = () => {
         return age > 19;
     };
 
+    const twoOption = () => {};
+
+    //선택적 매개변수
+
+    const goodFunction = (name?: string) => {
+        return `Hello, ${name || "world"}`;
+    };
+
+    //나머지 매개변수
+
+    const goodAdd = (...nums: Array<number>) => {
+        return nums.reduce((result, num) => result + num, 0);
+    };
+
+    //문자열 리터럴 타입
+    const userName1 = "bob1";
+
+    let userName2: string | number = "tom";
+
+    userName2 = 3;
+
+    //types
+    type job = "police " | "developer" | "teacher";
+
+    //교차타입
+
+    interface Car {
+        name: string;
+        start(): void;
+    }
+
+    interface Toy {
+        name: string;
+        color: string;
+        price: number;
+    }
+
+    const toyCar: Toy & Car = {
+        name: "타요",
+        start() {},
+        color: "bule",
+        price: 1000,
+    };
+
+    class Car {
+        name: string = "car";
+    }
+
+    //Generic
+
+    const getSize = <T,>(arr: T[]): number => {
+        return arr.length;
+    };
+
+    const arr1 = [1, 2, 3];
+    getSize<number>(arr1);
+
+    const arr2 = ["h", "2", "3"];
+    getSize<string>(arr2);
+
+    interface Mobile<T> {
+        name: string;
+        age: number;
+        object: T;
+    }
+
     useEffect(() => {
         greeter("world");
         greetUser({ name: "love", age: 30 });
@@ -72,7 +138,9 @@ const Home = () => {
         console.log(Os[10], Os["Window"]);
         console.log(user.name, (user.gender = "his"));
         console.log(10, 20);
-        console.log(goodT(17));
+        console.log(goodT(17), interGood(1, 2));
+        console.log(goodFunction());
+        console.log(goodAdd(1, 2, 3));
     }, []);
 
     return (
