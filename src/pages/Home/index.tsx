@@ -130,6 +130,52 @@ const Home = () => {
         object: T;
     }
 
+    // 노마드 코더
+
+    interface Nico {
+        name: string;
+    }
+
+    const nico: Nico = {
+        name: "good",
+    };
+
+    let a = "hello";
+    a = "bye";
+    let b: boolean = true;
+    // a = true;
+
+    //alias 별칭
+    type Player = {
+        name: string;
+        age?: number;
+    };
+
+    const player: {
+        name: string;
+        age?: number;
+    } = {
+        name: "hello",
+    };
+
+    const yoon: Player = {
+        name: "good",
+    };
+
+    // if (player.age < 10) {
+    //     console.log("hello");
+    // }
+    if (player.age && player.age > 10) {
+        console.log("nico");
+    }
+    const playerMaker = (name: string): Player => {
+        return {
+            name,
+        };
+    };
+    const nico1 = playerMaker("nico");
+    nico1.age = 12;
+
     useEffect(() => {
         greeter("world");
         greetUser({ name: "love", age: 30 });
