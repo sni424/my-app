@@ -176,6 +176,101 @@ const Home = () => {
     const nico1 = playerMaker("nico");
     nico1.age = 12;
 
+    const numbers: readonly number[] = [1, 2, 3, 4];
+    // numbers.push(1)
+
+    //unknown
+    let a1: unknown;
+    // let b1 = a1 +1;
+    if (typeof a1 === "number") {
+        let b = a1 + 1;
+    }
+    if (typeof a1 === "string") {
+        let b = a1.toLocaleUpperCase();
+    }
+
+    //void 아무것도 return하지 않는 함수 꼭 쓸필요 없음
+    const hello = (): void => {
+        console.log("x");
+    };
+
+    //never
+    const good = (): never => {
+        // return "x"
+        throw new Error("xxx");
+    };
+    const good1 = (name: string | number) => {
+        if (typeof name === "string") {
+            name;
+        } else if (typeof name === "number") {
+            name;
+        } else {
+            name;
+        }
+    };
+
+    //Call Signatures
+    type Add1 = (a: number, b: number) => number;
+    const add: Add1 = (a, b) => {
+        return a + b;
+    };
+
+    //Overloading는 Call Signatures이 여러개인것
+    type Add2 = {
+        (a: number, b: number): number;
+        (a: number, b: string): number;
+        (a: number, b: number, c: number): number;
+    };
+
+    const add1: Add2 = (a, b, c?: number) => {
+        if (typeof b === "string") {
+            return a;
+        }
+        if (c) {
+            return a + b + c;
+        } else {
+            return a + b;
+        }
+    };
+
+    //Polymorephism 다향성 다양한 구조,모양
+    //concreate type => number,string같은 원시
+    type SuperPrint = {
+        <T>(arr: T[]): void;
+    };
+
+    const superPrint: SuperPrint = (arr) => {
+        arr.forEach((i) => console.log(i));
+    };
+
+    superPrint([1, "안녕", false]);
+
+    //Generics Recap
+    type SuperPrint1 = {
+        <T, M>(a: T[], b: M): T | M;
+    };
+    const superPrint1: SuperPrint1 = (a, b) => {
+        if (b) {
+            return b;
+        } else {
+            return a[0];
+        }
+    };
+    const a2 = superPrint1([1, 2, 3], "string");
+
+    // Conclusions 결론
+    type GoodPlayer<T> = {
+        name: string;
+        extraInfo: T;
+    };
+
+    const jong: GoodPlayer<{ favFood: string }> = {
+        name: "jong",
+        extraInfo: {
+            favFood: "hamburger",
+        },
+    };
+
     useEffect(() => {
         greeter("world");
         greetUser({ name: "love", age: 30 });
