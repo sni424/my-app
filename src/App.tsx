@@ -8,8 +8,8 @@ import TodoMain from "./pages/Todo";
 const App = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="todo" element={<TodoMain />} />
+            <Route path="/" element={<TodoMain />} />
+            <Route path="main" element={<Home />} />
         </Routes>
     );
 };

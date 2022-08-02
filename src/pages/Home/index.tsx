@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect } from "react";
 
 const Home = () => {
@@ -270,6 +271,122 @@ const Home = () => {
             favFood: "hamburger",
         },
     };
+
+    //Classes
+
+    //     구분　　　선언한 클래스 내　상속받은 클래스 내　인스턴스
+    // private 　 　　　⭕　　　　　　　❌　　　　　❌
+    // protected 　　　⭕　　　　　　　⭕　　　　　❌
+    // public　　　　　⭕　　　　　　　⭕　　　　　⭕
+
+    //abstract클래스는 다른 클래스가 상속받을 수 있는 클래스
+    abstract class Gooduser {
+        constructor(
+            private firstSong: string,
+            protected lastSong: string,
+            public nickSong: string
+        ) {}
+        getFullSong() {
+            return `${this.firstSong} ${this.lastSong}`;
+        }
+    }
+
+    class Player3 extends Gooduser {}
+
+    class UserGood {
+        constructor(
+            private firstName: string,
+            private lastName: string,
+            public nickName: string
+        ) {}
+    }
+
+    const nico2 = new UserGood("good", "hello", "nico");
+    const nico3 = new Player3("good", "hello", "nico");
+
+    //hashmap
+    type Words = {
+        [key: string]: string;
+    };
+
+    class Dict {
+        private words: Words;
+        constructor() {
+            this.words = {};
+        }
+        add(word: Words) {
+            if (this.words[word.term] === undefined) {
+                this.words[word.term] = word.def;
+            }
+        }
+    }
+
+    class Word {
+        constructor(term: string, def: string) {}
+    }
+
+    const kimchi = new Word("kimchi", "한국의 음식");
+
+    //Interfaces 오직 오브젝트 모양을 특정한다
+    //type은 type Team = "red" | "blue" | "yellow", type Hello = string 등 도 가능
+    //type은 interface에 비해 다양한 형태로 사용가능
+    //interface는 class처럼 extends를 사용하요 상속 가능
+    //그러나 type도 비슷하게 사용 가능
+
+    interface UserNumber {
+        name: string;
+    }
+
+    interface SpecialUser extends UserNumber {}
+
+    const nico4: SpecialUser = {
+        name: "hello",
+    };
+
+    type UserNumber1 = {
+        name: string;
+    };
+
+    type SpecialUser1 = UserNumber1 & {};
+
+    const nico5: SpecialUser1 = {
+        name: "hello",
+    };
+
+    //implements 상속이라고 생각하면 편함
+    //클래스가 특정 인터페이스를 충족하는지 확인할 수 있습니다.
+    //interface를 implements하면 private 및 protected 사용 불가
+
+    //베스트 댓글
+    //     Type Aliases과 Interfaces의 차이점
+
+    // Type Aliases과 인터페이스는 매우 유사하며 많은 경우 자유롭게 선택할 수 있습니다. 인터페이스의 거의 모든 기능은 type에서 사용할 수 있으며, 주요 차이점은 type을 다시 열어 새 속성을 추가할 수 없는 것입니다. 반면 인터페이스는 항상 확장 가능합니다.
+
+    // 결론: 대부분의 경우 개인 취향에 따라 선택 가능
+    // (인터페이스 사용을 조금 더 추천)
+    interface UserTwo {
+        firstName: string;
+        lastName: string;
+        sayHi(name: string): string;
+        fullName(): string;
+    }
+    interface Human {
+        health: number;
+    }
+
+    class PlayerTwo implements UserTwo, Human {
+        constructor(
+            public firstName: string,
+            public lastName: string,
+            public health: number
+        ) {}
+        fullName(): string {
+            return `${this.firstName} ${this.lastName}`;
+        }
+        sayHi(name: string): string {
+            return `Hello ${name}. My name is ${this.firstName}`;
+        }
+    }
 
     useEffect(() => {
         greeter("world");
