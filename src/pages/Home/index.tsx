@@ -201,11 +201,11 @@ const Home = () => {
     };
     const good1 = (name: string | number) => {
         if (typeof name === "string") {
-            name;
+            return name;
         } else if (typeof name === "number") {
-            name;
+            return name;
         } else {
-            name;
+            return name;
         }
     };
 
