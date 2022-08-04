@@ -8,6 +8,8 @@ import { theme } from "./utils/theme";
 import Coin from "./pages/Coins/Coin";
 import Coins from "./pages/Coins";
 import { GlobalStyle } from "./utils/GlobalStyle";
+import Price from "./pages/Coins/Price";
+import Chart from "./pages/Coins/Chart";
 
 const App = () => {
     return (
@@ -16,7 +18,10 @@ const App = () => {
                 <GlobalStyle />
                 <Routes>
                     <Route path="/" element={<Coins />} />
-                    <Route path="/:coinID" element={<Coin />} />
+                    <Route path="/:coinID/*" element={<Coin />}>
+                        <Route path="chart" element={<Chart />} />
+                        <Route path="price" element={<Price />} />
+                    </Route>
                     <Route path="todo" element={<TodoMain />} />
                     <Route path="main" element={<Home />} />
                     <Route path="style" element={<StyledComponent />} />
