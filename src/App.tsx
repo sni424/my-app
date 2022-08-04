@@ -15,12 +15,12 @@ const App = () => {
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
                 <Routes>
-                    <Route path="/" element={<TodoMain />} />
+                    <Route path="/" element={<Coins />} />
+                    <Route path="/:coinID" element={<Coin />} />
+                    <Route path="todo" element={<TodoMain />} />
                     <Route path="main" element={<Home />} />
                     <Route path="style" element={<StyledComponent />} />
                     <Route path="circle" element={<Circle bgColor="teal" />} />
-                    <Route path="coin" element={<Coins />} />
-                    <Route path="coin/:coinID" element={<Coin />} />
                 </Routes>
             </ThemeProvider>
         </>
