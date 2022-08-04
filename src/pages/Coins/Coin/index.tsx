@@ -1,15 +1,10 @@
 import styled from "styled-components";
-import {
-    Outlet,
-    Route,
-    Routes,
-    useLocation,
-    useParams,
-} from "react-router-dom";
+import { Outlet, useLocation, useParams, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Price from "../Price";
 import Chart from "../Chart";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -56,6 +51,28 @@ const OverviewItem = styled.div`
 `;
 const Description = styled.p`
     margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 25px 0px;
+    gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 7px 0px;
+    border-radius: 10px;
+    color: ${(props) =>
+        props.isActive ? props.theme.accentColor : props.theme.textColor};
+    a {
+        display: block;
+    }
 `;
 
 interface LocationState {
@@ -137,6 +154,9 @@ const Coin = () => {
 
     const { state } = useLocation() as LocationState;
 
+    const priceMatch = useMatch("/:coinId/price");
+    const chartMatch = useMatch("/:coinId/chart");
+
     const fetchCoin = async () => {
         const infoData = await axios(
             `https://api.coinpaprika.com/v1/coins/${coinID}`
@@ -186,6 +206,14 @@ const Coin = () => {
                             <span>{priceInfo?.max_supply}</span>
                         </OverviewItem>
                     </Overview>
+                    <Tabs>
+                        <Tab isActive={chartMatch !== null}>
+                            <Link to={`/${coinID}/chart`}>Chart</Link>
+                        </Tab>
+                        <Tab isActive={priceMatch !== null}>
+                            <Link to={`/${coinID}/price`}>Price</Link>
+                        </Tab>
+                    </Tabs>
                     <Outlet />
                 </>
             ) : (
