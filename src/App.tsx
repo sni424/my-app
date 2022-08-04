@@ -18,7 +18,7 @@ const App = () => {
                 <GlobalStyle />
                 <Routes>
                     <Route path="/" element={<Coins />} />
-                    <Route path="/:coinID/*" element={<Coin />}>
+                    <Route path="/:coinID/" element={<Coin />}>
                         <Route path="chart" element={<Chart />} />
                         <Route path="price" element={<Price />} />
                     </Route>
