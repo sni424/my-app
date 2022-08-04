@@ -10,24 +10,34 @@ import Coins from "./pages/Coins";
 import { GlobalStyle } from "./utils/GlobalStyle";
 import Price from "./pages/Coins/Price";
 import Chart from "./pages/Coins/Chart";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClinet = new QueryClient();
 
 const App = () => {
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <GlobalStyle />
-                <Routes>
-                    <Route path="/" element={<Coins />} />
-                    <Route path="/:coinID/" element={<Coin />}>
-                        <Route path="chart" element={<Chart />} />
-                        <Route path="price" element={<Price />} />
-                    </Route>
-                    <Route path="todo" element={<TodoMain />} />
-                    <Route path="main" element={<Home />} />
-                    <Route path="style" element={<StyledComponent />} />
-                    <Route path="circle" element={<Circle bgColor="teal" />} />
-                </Routes>
-            </ThemeProvider>
+            <QueryClientProvider client={queryClinet}>
+                <ThemeProvider theme={theme}>
+                    <GlobalStyle />
+                    <Routes>
+                        <Route path="/" element={<Coins />} />
+                        <Route path="/:coinID/" element={<Coin />}>
+                            <Route path="chart" element={<Chart />} />
+                            <Route path="price" element={<Price />} />
+                        </Route>
+                        <Route path="todo" element={<TodoMain />} />
+                        <Route path="main" element={<Home />} />
+                        <Route path="style" element={<StyledComponent />} />
+                        <Route
+                            path="circle"
+                            element={<Circle bgColor="teal" />}
+                        />
+                    </Routes>
+                </ThemeProvider>
+                <ReactQueryDevtools initialIsOpen={true} />
+            </QueryClientProvider>
         </>
     );
 };
