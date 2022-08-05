@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "./Api/index";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -74,6 +75,9 @@ const Coins = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>코인</title>
+            </Helmet>
             <Header />
             <Title>코인</Title>
             {isLoading ? (

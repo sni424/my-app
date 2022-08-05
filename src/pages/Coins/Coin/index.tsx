@@ -1,12 +1,16 @@
 import styled from "styled-components";
-import { Outlet, useLocation, useParams, useMatch } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Price from "../Price";
-import Chart from "../Chart";
+import {
+    Outlet,
+    useLocation,
+    useParams,
+    useMatch,
+    useNavigate,
+} from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../Api";
+import { IoArrowBack } from "react-icons/io5";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -24,13 +28,26 @@ const Header = styled.header`
 const Title = styled.h1`
     font-size: 48px;
     color: ${(props) => props.theme.accentColor};
-    margin-bottom: 30px;
     text-align: center;
 `;
 const Loader = styled.h1`
     text-align: center;
     font-size: 28px;
     display: block;
+`;
+
+const FlexDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -2rem;
+    margin-bottom: 30px;
+`;
+
+const IconDiv = styled.div`
+    font-size: 3rem;
+    margin-top: 10px;
+    cursor: pointer;
 `;
 
 const Overview = styled.div`
@@ -149,6 +166,7 @@ interface IPriceData {
 
 const Coin = () => {
     const { coinID } = useParams();
+    const navi = useNavigate();
 
     const { state } = useLocation() as LocationState;
 
@@ -160,8 +178,12 @@ const Coin = () => {
         () => fetchCoinInfo(`${coinID}`)
     );
     const { isLoading: tickersLoading, data: tockersData } =
-        useQuery<IPriceData>(["tickers", coinID], () =>
-            fetchCoinTickers(`${coinID}`)
+        useQuery<IPriceData>(
+            ["tickers", coinID],
+            () => fetchCoinTickers(`${coinID}`),
+            {
+                refetchInterval: 5000,
+            }
         );
     // const [loading, setLoading] = useState<boolean>(false);
     // const [info, setInfo] = useState<IInfoData>();
@@ -183,14 +205,32 @@ const Coin = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>
+                    {state?.name
+                        ? state.name
+                        : loading
+                        ? "Loading..."
+                        : infoData?.name}
+                </title>
+            </Helmet>
             <Header />
-            <Title>
-                {state?.name
-                    ? state.name
-                    : loading
-                    ? "Loading..."
-                    : infoData?.name}
-            </Title>
+            <FlexDiv>
+                <IconDiv>
+                    <IoArrowBack
+                        onClick={() => {
+                            navi("/");
+                        }}
+                    />
+                </IconDiv>
+                <Title>
+                    {state?.name
+                        ? state.name
+                        : loading
+                        ? "Loading..."
+                        : infoData?.name}
+                </Title>
+            </FlexDiv>
             {loading ? (
                 <Loader>loding...</Loader>
             ) : (
@@ -202,11 +242,13 @@ const Coin = () => {
                         </OverviewItem>
                         <OverviewItem>
                             <span>Symbol:</span>
-                            <span>${infoData?.symbol}</span>
+                            <span>{infoData?.symbol}</span>
                         </OverviewItem>
                         <OverviewItem>
-                            <span>Open Source:</span>
-                            <span>{infoData?.open_source ? "Yes" : "No"}</span>
+                            <span>Price:</span>
+                            <span>
+                                ${tockersData?.quotes.USD.price.toFixed(3)}
+                            </span>
                         </OverviewItem>
                     </Overview>
                     <Description>{infoData?.description}</Description>
