@@ -6,6 +6,7 @@ declare module "styled-components" {
         textColor: string;
         bgColor: string;
         accentColor: string;
+        boxDiv: string;
     }
 }
 declare module "react-query/types/react/QueryClientProvider" {
