@@ -11,18 +11,12 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../Api";
 import { IoArrowBack } from "react-icons/io5";
+import Header from "../../../Layout/Header";
 
 const Container = styled.div`
     padding: 0px 20px;
     max-width: 480px;
     margin: 0 auto;
-`;
-
-const Header = styled.header`
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -53,7 +47,7 @@ const IconDiv = styled.div`
 const Overview = styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: ${(props) => props.theme.boxDiv};
     padding: 10px 20px;
     border-radius: 10px;
 `;
@@ -61,6 +55,7 @@ const OverviewItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: ${(props) => props.theme.textColor};
     span:first-child {
         font-size: 10px;
         font-weight: 400;
@@ -84,7 +79,7 @@ const Tab = styled.span<{ isActive: boolean }>`
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 400;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: ${(props) => props.theme.boxDiv};
     padding: 7px 0px;
     border-radius: 10px;
     color: ${(props) =>
@@ -92,6 +87,13 @@ const Tab = styled.span<{ isActive: boolean }>`
     a {
         display: block;
     }
+`;
+
+const Flexdiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 `;
 
 interface LocationState {
