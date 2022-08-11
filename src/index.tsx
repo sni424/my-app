@@ -6,7 +6,7 @@ import { RecoilRoot } from "recoil";
 import App from "./App";
 
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
         <React.StrictMode>
             <RecoilRoot>
                 <App />
